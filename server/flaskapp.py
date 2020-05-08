@@ -25,6 +25,9 @@ def getssid():
     f.close()
 
     t = t.replace('ss_id', ssid)
+    
+    sessions[ssid] = '0'
+    
     return t
 
 @app.route('/gamepad/<ss_id>')
