@@ -185,7 +185,7 @@ def start_game():
                 if event.key == 274:
                     dino.sogn = False
                 # проверяем события
-        if k_pr % 3 == 0:    
+        if k_pr % 2 == 0:    
             keys = ogp.get_events(ssid)
             for i in keys:
                 if i == 'K_UP':
