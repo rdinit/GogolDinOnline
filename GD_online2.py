@@ -28,8 +28,8 @@ class Dino(pygame.sprite.Sprite):
         # вызывается на каждый цикл
         self.kstep += 1
         self.y += self.vs
-        self.rect.y = self.y
-        self.rect.x = self.x
+        self.rect.y = int(self.y)
+        self.rect.x = int(self.x)
         self.vs += 1
         if self.rect.y >= 300 and self.vs != 0:
             if self.sogn:
@@ -40,7 +40,7 @@ class Dino(pygame.sprite.Sprite):
                 self.y = 300
         if self.y >= 300:
             if self.sogn:
-                if self.kstep > 25 / spd: # проверкаа на надобность делания шага
+                if self.kstep > 25 / spd:  # проверкаа на надобность делания шага
                     self.cost_sog += 1
                     self.cost_sog %= 2
                     self.kstep = 0
@@ -82,7 +82,7 @@ class Cactus(pygame.sprite.Sprite):
         self.rect.y = 300
 
     def step(self, spd):
-        self.rect.x -= spd
+        self.rect.x -= int(spd)
         return self.rect.x < -100
 
 
@@ -96,10 +96,10 @@ class Ground(pygame.sprite.Sprite):
         self.zam = False
 
     def step(self, spd):
-        self.rect.x -= spd
+        self.rect.x -= int(spd)
         n = 0
         if self.rect.x < 100 and not self.zam:
-            #правый конец земли подьезжает к концу экрана значит надо создать следующую
+            # правый конец земли подьезжает к концу экрана значит надо создать следующую
             n = 1
             self.zam = True
         if self.rect.x < -2000:
@@ -110,7 +110,7 @@ class Ground(pygame.sprite.Sprite):
 
 class FlyingDino(pygame.sprite.Sprite):
     def sozdat(self):
-        self.tip = rnd(1, 1)
+        self.tip = rnd(2, 2)
         self.image = pygame.image.load(f'dinodata/pterod/base.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = 1500
@@ -118,7 +118,7 @@ class FlyingDino(pygame.sprite.Sprite):
         self.rect.y = y_p[self.tip]
 
     def step(self, spd):
-        self.rect.x -= spd + 4
+        self.rect.x -= int(spd + 4)
         return self.rect.x < -100
 
 
@@ -162,7 +162,7 @@ def start_game():
             
         if rnd(1, 10) == 1 and prep_timer > 35:
             # создание препятсвий
-            if rnd(1,4) == 1:
+            if rnd(1, 4) == 1:
                 d = FlyingDino()
                 d.sozdat()
                 prepyat.append(d)
@@ -223,7 +223,7 @@ def start_game():
         score += 1
         
         speed += 0.006
-        prep_timer += 0.5 # таймер препятствий
+        prep_timer += 0.5  # таймер препятствий
         
         all_sprites.draw(screen)
         prep.draw(screen)
@@ -244,7 +244,7 @@ def start_game():
     if score > hiscore:
         hiscore = score
         
-    hscore_file = open('dinodata/hiscore.txt', 'w') # сохранение хискоре
+    hscore_file = open('dinodata/hiscore.txt', 'w')  # сохранение хискоре
     hscore_file.write(str(hiscore))
     hscore_file.close()
     pygame.quit()
